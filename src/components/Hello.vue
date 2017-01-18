@@ -23,11 +23,12 @@
 <script>
 import Tag from '../models/Tag'
 import SubTag from '../models/SubTag'
+import _ from 'lodash'
+
 var t = Tag.create({time:{min:"10"}, subs:[{imadude:"youradude"}]});
 var o = Tag.create({time:{min:"20"}});
 console.log(t);
-console.log(o.time.format());
-
+debugger;
 export default {
   name: 'hello',
   data () {

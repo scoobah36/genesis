@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 //allows objects to define genesis arrays that can be pushed
 Array.prototype.__genesis__;
