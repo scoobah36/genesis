@@ -1,4 +1,16 @@
 
+//allows objects to define genesis arrays that can be pushed
+Array.prototype.__genesis__;
+Array.prototype.pushCreate = function(newItem){
+    if(newItem && this.__genesis__){
+        if(newItem._isGenesis){
+            this.push(this.__genesis__.create(newItem.create()))
+        }else{
+            this.push(this.__genesis__.create(newItem))
+        }
+    }
+}
+
 export default function(objectName, objectDefinition, extensions) {
     
     var genesis = {
@@ -8,20 +20,31 @@ export default function(objectName, objectDefinition, extensions) {
 
         create: function (data, suppressInit) {
 
+            //recusively itterate object attributes to expand any child genesis objects
             var walk = function(wobj, wdata){
                 for (var key in wobj) {
+                    var attr = wobj[key];
+                    var val = wdata[key];
                     // skip loop if the property is from prototype
                     if (!wobj.hasOwnProperty(key) || _.isFunction(attr)) continue;
 
-                    var attr = wobj[key];
-                    var val = wdata[key];
-                    if(_.isObject(attr)){
+                    if(_.isArray(attr) && attr[0] && attr[0]._isGenesis) {
+                        //genesis arrays should be defined with one genesis object in them 
+                        wobj[key].__genesis__ = attr.shift();
+                        if(_.isArray(val)){
+                            val.forEach(function(item){
+                                wobj[key].pushCreate(item)
+                            })
+                        }
+                    }else if(_.isObject(attr)){
+                        //create or recurse to find more genesis objects
                         if(attr._isGenesis){
                             wobj[key] = attr.create(val || {});
                         }else {
                             wobj[key] = walk(attr, val || {});
                         }
                     }else if(val != undefined) {
+                        //everything else just grab the value
                         wobj[key] = val;
                     }
                 }
@@ -53,7 +76,7 @@ export default function(objectName, objectDefinition, extensions) {
             }
 
             return obj;
-        }
+        },
     };
 
     var exts = [];

@@ -23,10 +23,9 @@
 <script>
 import Tag from '../models/Tag'
 import SubTag from '../models/SubTag'
-var t = Tag.create({time:{min:"10"}});
+var t = Tag.create({time:{min:"10"}, subs:[{imadude:"youradude"}]});
 var o = Tag.create({time:{min:"20"}});
-debugger;
-console.log(t.time.format());
+console.log(t);
 console.log(o.time.format());
 
 export default {
