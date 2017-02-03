@@ -1,8 +1,8 @@
-import g from '../Genesis'
+import g from 'genesis-object'
 import DateTime from './Date'
 import SubTag from './SubTag'
 
-export default g("Tag", function(){
+export default g(function(){
     var self = {
         tagish:"stuff",
         likeat:true,

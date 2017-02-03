@@ -1,22 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <button v-on:click="update">update</button>
+    <button v-on:click="changeThing">change</button>
+    <h1>{{ thing1 }}</h1>
   </div>
 </template>
 
@@ -24,16 +10,61 @@
 import Tag from '../models/Tag'
 import SubTag from '../models/SubTag'
 import _ from 'lodash'
+import g from 'genesis-object'
+
+var origin = g(function(){
+          var test = "test";
+          var self = {
+              id:"10asdf",
+              thing1:1,
+              thing2:2,
+              getId:function(){
+                console.log(test);
+              },
+              changeThing: function(){
+                self.thing1 = 10;
+              }
+          }
+          return self
+      }, []);
+var thing = g(function(){
+          var test = "testies";
+          var self = {
+              id:1,
+              item:1,
+              getTest:function(){
+                console.log(test);
+              }
+          }
+          return self
+      }, [origin]);
+var gObj = g(function(){
+          var self = {
+              model:"vod",
+              query: '',
+              vods:thing,
+              changeModel: function(){
+                self.model = "updated"
+              }
+          }
+          return self
+      });
+
+
+var ctrl = thing.create();
+    
 
 var t = Tag.create({time:{min:"10"}, subs:[{imadude:"youradude"}]});
 var o = Tag.create({time:{min:"20"}});
-console.log(t);
-debugger;
+// console.log(t);
 export default {
   name: 'hello',
   data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    return thing.create()
+  },
+  methods:{
+    update:function(){
+      this.thing1 = "new tame"
     }
   }
 }

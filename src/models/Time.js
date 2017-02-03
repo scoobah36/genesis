@@ -1,6 +1,6 @@
-import g from '../Genesis'
+import g from 'genesis-object'
 
-export default g("Time", function(){
+export default g(function(){
     var self = {
         min:"23",
         sec:48,

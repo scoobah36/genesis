@@ -1,6 +1,6 @@
-import g from '../Genesis'
+import g from 'genesis-object'
 
-export default g("Domain", function(){
+export default g(function(){
     var self = {
         save:function(){
 
@@ -9,7 +9,7 @@ export default g("Domain", function(){
 
         },
         hydrate:function(){
-            
+
         }
     }
     return self

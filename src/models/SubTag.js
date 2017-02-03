@@ -1,6 +1,6 @@
-import g from '../Genesis'
+import g from 'genesis-object'
 
-export default g("SubTag", function(){
+export default g(function(){
     var self = {
         imadude:"shesadude"
     }

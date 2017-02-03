@@ -1,7 +1,7 @@
-import g from '../Genesis'
+import g from 'genesis-object'
 import Time from './Time'
 
-export default g("Date", function(){
+export default g(function(){
     var self = {
         day:0,
         month:0,
